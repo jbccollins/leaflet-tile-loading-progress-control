@@ -1,6 +1,6 @@
 {
   "name": "leaflet-tile-loading-progress-control",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A leaflet control that indicates tile loading progress for a group of tile layers",
   "main": "dist/Control.TileLoadingProgress.js",
   "scripts": {
