@@ -23,9 +23,10 @@ tileLoadingProgress.addTo(map);
 ## Options
 
 | Option          |  Type            | Description |
-| --------------- | ---------------- | ----------------- | ----------- |
+| --------------- | ---------------- | ----------------- |
 | `leafletElt`       | Leaflet LayerGroup          | Group of tile layers tracked by the loading progress control. |
 
 # Example GIF
 from https://us-weather-monitor.herokuapp.com/
+
 ![Example Gif](https://media.giphy.com/media/4EFCKYcBEztFydh9HR/giphy.gif)
