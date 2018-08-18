@@ -6,14 +6,15 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "npm run build:js && npm run build:css",
-    "build:js": "rollup --output.format=iife --name=L.Control.TileLoadingProgress --globals=leaflet:L src/index.js --output.file=dist/Control.TileLoadingProgress.js --sourcemap",
+    "build:js": "rollup -c",
     "build:css": "cpr Control.TileLoadingProgress.css dist/Control.TileLoadingProgress.css --overwrite",
     "test": "npm run lint",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint 'src/**'",
     "lint:css": "prettier --list-different '*.css'",
     "publish": "sh ./scripts/publish.sh",
-    "postpublish": "sh ./scripts/postpublish.sh"
+    "postpublish": "sh ./scripts/postpublish.sh",
+    "dev": "rollup -c -w"
   },
   "repository": {
     "type": "git",
@@ -28,12 +29,11 @@
   "bugs": {
     "url": "https://github.com/jbccollins/leaflet-tile-loading-progress-control/issues"
   },
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "cpr": "^3.0.1",
     "eslint": "^4.15.0",
     "eslint-plugin-prettier": "^2.4.0",
     "prettier": "^1.9.2",
-    "rollup": "^0.53.2"
+    "rollup": "^0.64.1"
   }
 }

@@ -65,7 +65,7 @@ export default {
             } else {
                 this.container.style.opacity = 1;
             }
-            this.loadingText.innerHTML = `Loading Tiles (${Math.floor(percent)}%)`
+            this.loadingText.innerHTML = "Loading Tiles (" + Math.floor(percent) + "%)";
         },
         handleLayerLoading: function (e) {
             this.handleLoadingStatusUpdate();
