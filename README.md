@@ -1,7 +1,7 @@
 # leaflet-tile-loading-progress-control
 A leaflet control that indicates tile loading progress for a group of tile layers. This can be useful when you have a lot of tile layers or tiles that frequently refresh.
 
-My particualar use case was for a looping precipitation radar that was built using ten tile layers that each needed to be updated every five minutes. Zooming and panning the map causes a lot of tile requests to be sent out. These can take a second to load and in the mean time I didn't want the end user to think the map was breaking.
+My particualar use case was for a looping precipitation radar that was built using ten tile layers that each needed to be updated every five minutes. Zooming and panning the map causes a lot of tile requests to be sent out. These can take a second to load and in the meantime I didn't want the end user to think the map was breaking.
 
 # Usage
 ```javascript
