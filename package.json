@@ -1,6 +1,6 @@
 {
   "name": "leaflet-tile-loading-progress-control",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A leaflet control that indicates tile loading progress for a group of tile layers",
   "main": "dist/Control.TileLoadingProgress.js",
   "scripts": {
@@ -32,8 +32,8 @@
   "dependencies": {
     "cpr": "^3.0.1",
     "eslint": "^4.15.0",
-    "eslint-plugin-prettier": "^2.4.0",
-    "prettier": "^1.9.2",
+    "eslint-plugin-prettier": "^2.7.0",
+    "prettier": "^1.17.0",
     "rollup": "^0.64.1"
   }
 }
