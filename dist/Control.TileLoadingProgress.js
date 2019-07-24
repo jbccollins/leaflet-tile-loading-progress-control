@@ -20,14 +20,10 @@ this.L.Control.TileLoadingProgress = (function (L) {
                 position: 'topright'
             },
             initialize: function (options) {
-                // constructor
                 this.handleLoadingStatusUpdate = this.handleLoadingStatusUpdate.bind(this);
-                this.handleTileLoadStart = this.handleTileLoadStart.bind(this);
-                this.handleTileUnload = this.handleTileUnload.bind(this);
                 this.handleTileLoad = this.handleTileLoad.bind(this);
                 this.handleLayerLoading = this.handleLayerLoading.bind(this);
                 this.handleTileError = this.handleTileError.bind(this);
-                this.handleLayerLoad = this.handleLayerLoad.bind(this);
                 this.getTileStatusCounts = this.getTileStatusCounts.bind(this);
                 L.Util.setOptions(this, options);
             },
@@ -61,33 +57,23 @@ this.L.Control.TileLoadingProgress = (function (L) {
                 this.loadingText = loadingText;
                 return container;
             },
-            onRemove: function (map) {
-                // when removed
-            },
             unbindLoadEventTriggers: function() {
                 for (var key in this.options.leafletElt._layers) {
                     var layer = this.options.leafletElt._layers[key];
-                    layer.off('tileloadstart', this.handleTileLoadStart);
-                    layer.off('tileunload', this.handleTileUnload);
                     layer.off('tileload', this.handleTileLoad);
                     layer.off('loading', this.handleLayerLoading);
                     layer.off('tileerror', this.handleTileError);
-                    layer.off('load', this.handleLayerLoad);
                 }
             },
             bindLoadEventTriggers: function() {
                 for (var key in this.options.leafletElt._layers) {
                     var layer = this.options.leafletElt._layers[key];
-                    layer.on('tileloadstart', this.handleTileLoadStart);
-                    layer.on('tileunload', this.handleTileUnload);
                     layer.on('tileload', this.handleTileLoad);
                     layer.on('loading', this.handleLayerLoading);
                     layer.on('tileerror', this.handleTileError);
-                    layer.on('load', this.handleLayerLoad);
                 }
             },
             handleLoadingStatusUpdate: function () {
-                var status = null;
                 var status = {
                     loading: 0,
                     loaded: 0
@@ -109,23 +95,14 @@ this.L.Control.TileLoadingProgress = (function (L) {
                 }
                 this.loadingText.innerHTML = "Loading Tiles (" + Math.floor(percent) + "%)";
             },
-            handleLayerLoading: function (e) {
+            handleLayerLoading: function () {
                 this.handleLoadingStatusUpdate();
             },
-            handleTileLoadStart: function (e) {
+            handleTileLoad: function () {
                 this.handleLoadingStatusUpdate();
             },
-            handleTileLoad: function (e) {
+            handleTileError: function () {
                 this.handleLoadingStatusUpdate();
-            },
-            handleTileError: function (e) {
-                this.handleLoadingStatusUpdate();
-            },
-            handleTileUnload: function (e) {
-                this.handleLoadingStatusUpdate();
-            },
-            handleLayerLoad: function (e) {
-                //console.log('loaded');
             },
             getTileStatusCounts: function (l) {
                 var status = {
