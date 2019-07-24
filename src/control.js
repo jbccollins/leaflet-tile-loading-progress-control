@@ -28,8 +28,8 @@ export default {
             loadingContainer.appendChild(loadingBackground);
             loadingContainer.appendChild(loadingForeground);
             container.appendChild(loadingContainer);
-            container.appendChild(loadingText);    
-            leafletElt._map.on('layeradd', function(e) {
+            container.appendChild(loadingText);
+            map.on('layeradd', function(e) {
                 var currentLayers = leafletElt.getLayers();
                 for (var i = 0; i < currentLayers.length; i++) {
                     // If the layer added to the map is part of the layer group then we rebind the loading triggers.
