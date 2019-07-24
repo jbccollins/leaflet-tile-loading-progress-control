@@ -1,5 +1,5 @@
 /* @preserve
- * Leaflet Control TileLoadingProgress 1.0.3
+ * Leaflet Control TileLoadingProgress 1.0.4
  * https://github.com/jbccollins/leaflet-tile-loading-progress-control
  *
  * Copyright (c) 2018 James Collins
@@ -32,6 +32,8 @@ this.L.Control.TileLoadingProgress = (function (L) {
                 L.Util.setOptions(this, options);
             },
             onAdd: function (map) {
+                var leafletElt = this.options.leafletElt;
+                var controlInstance = this;
                 var container = L.DomUtil.create('div', 'leaflet-control-progress-bar');
                 var loadingContainer = L.DomUtil.create('div', 'loading-container');
                 var loadingBackground = L.DomUtil.create('div', 'loading-background');
@@ -40,14 +42,17 @@ this.L.Control.TileLoadingProgress = (function (L) {
                 loadingContainer.appendChild(loadingBackground);
                 loadingContainer.appendChild(loadingForeground);
                 container.appendChild(loadingContainer);
-                container.appendChild(loadingText);
-                this.options.leafletElt.on('layeradd', function() {
-                    this.unbindLoadEventTriggers();
-                    this.bindLoadEventTriggers();
-                });
-                this.options.leafletElt.on('layerremove', function() {
-                    this.unbindLoadEventTriggers();
-                    this.bindLoadEventTriggers();
+                container.appendChild(loadingText);    
+                leafletElt._map.on('layeradd', function(e) {
+                    var currentLayers = leafletElt.getLayers();
+                    for (var i = 0; i < currentLayers.length; i++) {
+                        // If the layer added to the map is part of the layer group then we rebind the loading triggers.
+                        if (currentLayers[i] === e.layer) {
+                            controlInstance.unbindLoadEventTriggers();
+                            controlInstance.bindLoadEventTriggers();
+                            break;
+                        }
+                    }
                 });
                 this.bindLoadEventTriggers();
                 this.loadingForegroundElt = loadingForeground;
