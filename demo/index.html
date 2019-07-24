@@ -25,7 +25,7 @@
 	<button id="layer-toggle" style="position: fixed; top: 80px; left: 12px; z-index: 1000;">Toggle Labels Layer</button>
 
 	<script type="text/javascript">
-		var hasLabels = true;
+		var hasLabels = false;
 		var map = L.map('map').setView([0, 0], 2);
         var tileLayer1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png',
             {
@@ -37,7 +37,7 @@
             })
 
 
-        var tileLayers = L.layerGroup([tileLayer1, tileLayer2]);
+        var tileLayers = L.layerGroup([tileLayer1]);
 
         var tileProgressBarControl = new L.Control.TileLoadingProgress({
             leafletElt: tileLayers
