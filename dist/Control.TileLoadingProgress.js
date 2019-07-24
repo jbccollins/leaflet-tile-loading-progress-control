@@ -1,5 +1,5 @@
 /* @preserve
- * Leaflet Control TileLoadingProgress 1.0.4
+ * Leaflet Control TileLoadingProgress 1.0.5
  * https://github.com/jbccollins/leaflet-tile-loading-progress-control
  *
  * Copyright (c) 2018 James Collins
