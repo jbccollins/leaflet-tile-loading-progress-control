@@ -1,5 +1,5 @@
 /* @preserve
- * Leaflet Control TileLoadingProgress 1.0.4
+ * Leaflet Control TileLoadingProgress 1.0.6
  * https://github.com/jbccollins/leaflet-tile-loading-progress-control
  *
  * Copyright (c) 2018 James Collins
@@ -42,8 +42,8 @@ this.L.Control.TileLoadingProgress = (function (L) {
                 loadingContainer.appendChild(loadingBackground);
                 loadingContainer.appendChild(loadingForeground);
                 container.appendChild(loadingContainer);
-                container.appendChild(loadingText);    
-                leafletElt._map.on('layeradd', function(e) {
+                container.appendChild(loadingText);
+                map.on('layeradd', function(e) {
                     var currentLayers = leafletElt.getLayers();
                     for (var i = 0; i < currentLayers.length; i++) {
                         // If the layer added to the map is part of the layer group then we rebind the loading triggers.
