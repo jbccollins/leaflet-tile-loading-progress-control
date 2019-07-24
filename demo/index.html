@@ -1,13 +1,13 @@
 <html>
 <head>
-	<title>Leaflet Control Geocoder</title>
+	<title>Leaflet Tile Loading Progress Control</title>
 
   <meta name='viewport' content='width=device-width, user-scalable=no initial-scale=1, maximum-scale=1'>
 
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
 	<link rel="stylesheet" href="../dist/Control.TileLoadingProgress.css" />
 
-	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet-src.js"></script>
+	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet-src.js"></script>
 	<script src="../dist/Control.TileLoadingProgress.js"></script>
 	<style type="text/css">
 		body {
@@ -22,22 +22,36 @@
 </head>
 <body>
 	<div id="map"></div>
+	<button id="layer-toggle" style="position: fixed; top: 80px; left: 12px; z-index: 1000;">Toggle Labels Layer</button>
 
 	<script type="text/javascript">
+		var hasLabels = true;
 		var map = L.map('map').setView([0, 0], 2);
-        var tileLayer1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        var tileLayer1 = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png',
+            {
+                'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+			})
+		var tileLayer2 = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}.png',
             {
                 'attribution': 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
             })
 
-        var tileLayers = L.layerGroup([tileLayer1]);
+
+        var tileLayers = L.layerGroup([tileLayer1, tileLayer2]);
 
         var tileProgressBarControl = new L.Control.TileLoadingProgress({
             leafletElt: tileLayers
         });
         tileLayers.addTo(map);
         tileProgressBarControl.addTo(map);
-
+		document.getElementById("layer-toggle").addEventListener("click", function() {
+			if (hasLabels) {
+				tileLayers.removeLayer(tileLayer2);
+			} else {
+				tileLayers.addLayer(tileLayer2);
+			}
+			hasLabels = !hasLabels;
+		});
 	</script>
 </body>
 </html>
