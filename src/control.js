@@ -28,13 +28,7 @@ export default {
             container.appendChild(loadingContainer);
             container.appendChild(loadingText);
             for (var key in this.options.leafletElt._layers) {
-                var layer = this.options.leafletElt._layers[key];
-                layer.on('tileloadstart', this.handleTileLoadStart);
-                layer.on('tileunload', this.handleTileUnload);
-                layer.on('tileload', this.handleTileLoad);
-                layer.on('loading', this.handleLayerLoading);
-                layer.on('tileerror', this.handleTileError);
-                layer.on('load', this.handleLayerLoad);
+                this.addLayer(this.options.leafletElt._layers[key]);
             }
             this.loadingForegroundElt = loadingForeground;
             this.container = container;
@@ -43,6 +37,17 @@ export default {
         },
         onRemove: function (map) {
             // when removed
+        },
+        addLayer(layer) {
+            if (!this.options.leafletElt.hasLayer(layer)) {
+                this.options.leafletElt.addLayer(layer);
+            }
+            layer.on('tileloadstart', this.handleTileLoadStart);
+            layer.on('tileunload', this.handleTileUnload);
+            layer.on('tileload', this.handleTileLoad);
+            layer.on('loading', this.handleLayerLoading);
+            layer.on('tileerror', this.handleTileError);
+            layer.on('load', this.handleLayerLoad);
         },
         handleLoadingStatusUpdate: function () {
             var status = null;
@@ -87,17 +92,17 @@ export default {
         },
         getTileStatusCounts: function (l) {
             var status = {
-            loaded: 0,
-            loading: 0,
-            }
-                for (var key in l._tiles) {
-            if (l._tiles[key].loaded) {
-                status.loaded++;
-            } else {
-                status.loading++;
-            }
+                loaded: 0,
+                loading: 0,
+            };
+            for (var key in l._tiles) {
+                if (l._tiles[key].loaded) {
+                    status.loaded++;
+                } else {
+                    status.loading++;
                 }
-                return status;
+            }
+            return status;
         }
     }),
     factory: function(options) {
