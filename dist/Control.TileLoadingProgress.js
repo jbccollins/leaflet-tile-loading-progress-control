@@ -1,5 +1,5 @@
 /* @preserve
- * Leaflet Control TileLoadingProgress 1.0.0
+ * Leaflet Control TileLoadingProgress 1.0.3
  * https://github.com/jbccollins/leaflet-tile-loading-progress-control
  *
  * Copyright (c) 2018 James Collins
@@ -41,6 +41,35 @@ this.L.Control.TileLoadingProgress = (function (L) {
                 loadingContainer.appendChild(loadingForeground);
                 container.appendChild(loadingContainer);
                 container.appendChild(loadingText);
+                this.options.leafletElt.on('layeradd', function() {
+                    this.unbindLoadEventTriggers();
+                    this.bindLoadEventTriggers();
+                });
+                this.options.leafletElt.on('layerremove', function() {
+                    this.unbindLoadEventTriggers();
+                    this.bindLoadEventTriggers();
+                });
+                this.bindLoadEventTriggers();
+                this.loadingForegroundElt = loadingForeground;
+                this.container = container;
+                this.loadingText = loadingText;
+                return container;
+            },
+            onRemove: function (map) {
+                // when removed
+            },
+            unbindLoadEventTriggers: function() {
+                for (var key in this.options.leafletElt._layers) {
+                    var layer = this.options.leafletElt._layers[key];
+                    layer.off('tileloadstart', this.handleTileLoadStart);
+                    layer.off('tileunload', this.handleTileUnload);
+                    layer.off('tileload', this.handleTileLoad);
+                    layer.off('loading', this.handleLayerLoading);
+                    layer.off('tileerror', this.handleTileError);
+                    layer.off('load', this.handleLayerLoad);
+                }
+            },
+            bindLoadEventTriggers: function() {
                 for (var key in this.options.leafletElt._layers) {
                     var layer = this.options.leafletElt._layers[key];
                     layer.on('tileloadstart', this.handleTileLoadStart);
@@ -50,13 +79,6 @@ this.L.Control.TileLoadingProgress = (function (L) {
                     layer.on('tileerror', this.handleTileError);
                     layer.on('load', this.handleLayerLoad);
                 }
-                this.loadingForegroundElt = loadingForeground;
-                this.container = container;
-                this.loadingText = loadingText;
-                return container;
-            },
-            onRemove: function (map) {
-                // when removed
             },
             handleLoadingStatusUpdate: function () {
                 var status = null;
@@ -101,17 +123,17 @@ this.L.Control.TileLoadingProgress = (function (L) {
             },
             getTileStatusCounts: function (l) {
                 var status = {
-                loaded: 0,
-                loading: 0,
+                    loaded: 0,
+                    loading: 0,
                 };
-                    for (var key in l._tiles) {
-                if (l._tiles[key].loaded) {
-                    status.loaded++;
-                } else {
-                    status.loading++;
-                }
+                for (var key in l._tiles) {
+                    if (l._tiles[key].loaded) {
+                        status.loaded++;
+                    } else {
+                        status.loading++;
                     }
-                    return status;
+                }
+                return status;
             }
         }),
         factory: function(options) {
