@@ -1,5 +1,5 @@
 /* @preserve
- * Leaflet Control TileLoadingProgress 1.0.6
+ * Leaflet Control TileLoadingProgress 1.0.8
  * https://github.com/jbccollins/leaflet-tile-loading-progress-control
  *
  * Copyright (c) 2018 James Collins
@@ -50,6 +50,7 @@ this.L.Control.TileLoadingProgress = (function (L) {
                         if (currentLayers[i] === e.layer) {
                             controlInstance.unbindLoadEventTriggers();
                             controlInstance.bindLoadEventTriggers();
+                            controlInstance.handleLoadingStatusUpdate();
                             break;
                         }
                     }

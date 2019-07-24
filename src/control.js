@@ -36,6 +36,7 @@ export default {
                     if (currentLayers[i] === e.layer) {
                         controlInstance.unbindLoadEventTriggers();
                         controlInstance.bindLoadEventTriggers();
+                        controlInstance.handleLoadingStatusUpdate();
                         break;
                     }
                 }
